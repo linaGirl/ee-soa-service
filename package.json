@@ -1,0 +1,41 @@
+{
+    "name"                          : "ee-service"
+    , "description"                 : "abstract ee service implementation"
+    , "keywords"                    : []
+    , "version"                     : "0.1.0"
+    , "author": {
+        "name"                      : "Tobias Kneubuehler"
+        , "email"                   : "tobias@joinbox.com"
+    }
+    , "licence"                     : "mit"
+    , "repository": {
+        "url"                       : ""
+        , "type"                    : "git"
+    }
+    , "engines": {
+        "node"                      : ">= 0.10.26"
+    }
+    , "bugs": {
+        "url"                       : ""
+        , "email"                   : "tobias@joinbox.com"
+    }
+    , "dependencies": {
+        "ee-class"                  : "*"
+        , "ee-log"                  : "*"
+        , "ee-project"              : "*"
+        , "ee-types"                : "*"
+        , "ee-event-emitter"        : "*"
+    }
+    , "devDependencies": {
+        "mocha"                     : "*"
+        , "ee-webservice"           : "*"
+        , "em-rest-service"         : "*"
+        , "ee-orm"                  : "*"
+        , "ee-mysql-connection"     : "*"
+    }
+    , "optionalDependencies": {}
+    , "scripts": {
+        "test"                      : "./node_modules/mocha/bin/mocha --reporter spec"
+    }
+    , "private"                     : true
+}
