@@ -1,5 +1,5 @@
 {
-    "name"                          : "ee-service"
+    "name"                          : "ee-soa-service"
     , "description"                 : "abstract ee service implementation"
     , "keywords"                    : []
     , "version"                     : "0.1.0"
