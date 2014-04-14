@@ -9,14 +9,14 @@
     }
     , "licence"                     : "mit"
     , "repository": {
-        "url"                       : ""
+        "url"                       : "https://github.com/eventEmitter/ee-soa-service.git"
         , "type"                    : "git"
     }
     , "engines": {
         "node"                      : ">= 0.10.26"
     }
     , "bugs": {
-        "url"                       : ""
+        "url"                       : "https://github.com/eventEmitter/ee-soa-service/issues"
         , "email"                   : "tobias@joinbox.com"
     }
     , "dependencies": {
