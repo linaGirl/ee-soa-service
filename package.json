@@ -20,11 +20,12 @@
         , "email"                   : "tobias@joinbox.com"
     }
     , "dependencies": {
-        "ee-class"                  : "*"
-        , "ee-log"                  : "*"
-        , "ee-project"              : "*"
-        , "ee-types"                : "*"
-        , "ee-event-emitter"        : "*"
+        "ee-class"          : "*"
+        , "ee-log"          : "*"
+        , "ee-project"      : "*"
+        , "ee-types"        : "*"
+        , "ee-event-emitter": "*"
+        , "ee-soa-request"  : "git://github.com/eventEmitter/ee-soa-request"
     }
     , "devDependencies": {
         "mocha"                     : "*"
