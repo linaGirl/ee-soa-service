@@ -20,13 +20,14 @@
         , "email"                   : "tobias@joinbox.com"
     }
     , "dependencies": {
-        "ee-class"               : "*"
-        , "ee-log"               : "*"
-        , "ee-project"           : "*"
-        , "ee-types"             : "*"
-        , "ee-event-emitter"     : "*"
-        , "ee-soa-request"       : "git://github.com/eventEmitter/ee-soa-request"
-        , "em-soa-authentication": "git://github.com/eventEmitter/em-soa-authentication"
+        "ee-class"                : "*"
+        , "ee-log"                : "*"
+        , "ee-project"            : "*"
+        , "ee-types"              : "*"
+        , "ee-event-emitter"      : "*"
+        , "ee-soa-request"        : "git://github.com/eventEmitter/ee-soa-request"
+        , "ee-soa-response"       : "0.1.*"
+        , "em-soa-authentication" : "git://github.com/eventEmitter/em-soa-authentication"
     }
     , "devDependencies": {
         "mocha"                     : "*"
