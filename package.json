@@ -20,7 +20,7 @@
         , "email"                   : "tobias@joinbox.com"
     }
     , "dependencies": {
-        "ee-class"                : "*"
+        "ee-class"                : "0.4.*"
         , "ee-log"                : "*"
         , "ee-project"            : "*"
         , "ee-types"              : "*"
