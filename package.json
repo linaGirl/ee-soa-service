@@ -22,7 +22,7 @@
     , "dependencies": {
           "ee-class"                : "0.4.*"
         , "ee-log"                  : "0.2.x"
-        , "ee-project"              : "0.1.x"
+        , "ee-project"              : "0.2.x"
         , "ee-types"                : "0.1.x"
         , "ee-event-emitter"        : "0.1.x"
         , "ee-soa-request"          : "0.2.x"
