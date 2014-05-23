@@ -2,7 +2,7 @@
     "name"                          : "ee-soa-service"
     , "description"                 : "abstract ee service implementation"
     , "keywords"                    : ["ee", "soa", "service"]
-    , "version"                     : "0.1.8"
+    , "version"                     : "0.1.9"
     , "author": {
         "name"                      : "Tobias Kneubuehler"
         , "email"                   : "tobias@joinbox.com"
@@ -20,7 +20,7 @@
         , "email"                   : "tobias@joinbox.com"
     }
     , "dependencies": {
-          "ee-class"              : "0.4.*"
+          "ee-class"              : "1.0.x"
         , "ee-log"                : "0.2.x"
         , "ee-project"            : "0.2.x"
         , "ee-types"              : "0.1.x"
