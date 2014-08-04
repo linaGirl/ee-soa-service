@@ -1,5 +1,3 @@
 
-    module.exports                      = require('./lib/Service');
-    module.exports.DefaultService       = require('./lib/DefaultService');
-    module.exports.DefaultController    = require('./lib/DefaultController');
-    module.exports.DefaultORMController = require('./lib/DefaultORMController');
+    module.exports                      = require('./lib/DataService');
+    module.exports.DataController       = require('./lib/DataController');

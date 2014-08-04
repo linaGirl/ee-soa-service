@@ -20,15 +20,16 @@
         , "email"                   : "tobias@joinbox.com"
     }
     , "dependencies": {
-          "ee-class"              : "1.0.x"
-        , "ee-log"                : "0.2.x"
-        , "ee-project"            : "0.2.x"
-        , "ee-types"              : "0.1.x"
-        , "ee-event-emitter"      : "0.1.x"
-        , "ee-soa-request"        : "0.2.x"
-        , "ee-soa-response"       : "0.1.*"
-        , "em-soa-authentication" : "0.1.x"
-        , "ee-argv"               : "0.1.x"
+          "ee-class"                : "1.0.x"
+        , "ee-log"                  : "0.2.x"
+        , "ee-project"              : "0.2.x"
+        , "ee-types"                : "0.1.x"
+        , "ee-event-emitter"        : "0.1.x"
+        , "ee-soa-request"          : "0.2.x"
+        , "ee-soa-response"         : "0.1.x"
+        , "em-soa-authentication"   : "0.1.x"
+        , "ee-argv"                 : "0.1.x"
+        , "ee-async"                : "0.2.x"
     }
     , "devDependencies": {
           "mocha"                   : "1.19.*"
