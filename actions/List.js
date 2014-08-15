@@ -41,7 +41,10 @@
          * execute the action
          */
         , execute: function(request, query, response) {
-            query.find(response.send.bind(response));
+            query.find(function(err, rows) {
+                if (err) callback(err);
+                else this._subrequests.execute(request, response, rows);
+            }.bind(this));
         }
     });
 }();

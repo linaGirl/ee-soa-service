@@ -1,23 +1,23 @@
 {
     "name"                          : "ee-soa-service"
     , "description"                 : "abstract ee service implementation"
-    , "keywords"                    : ["ee", "soa", "service"]
-    , "version"                     : "0.2.4"
-    , "author": {
-        "name"                      : "Tobias Kneubuehler"
-        , "email"                   : "tobias@joinbox.com"
-    }
+    , "version"                     : "0.3.0"
     , "licence"                     : "mit"
+    , "author": {
+          "name"                    : "Michael van der Weg"
+        , "email"                   : "michael@joinbox.com"
+    }
     , "repository": {
-        "url"                       : "https://github.com/eventEmitter/ee-soa-service.git"
+          "url"                     : "https://github.com/eventEmitter/ee-soa-service.git"
         , "type"                    : "git"
     }
+    , "bugs": {
+          "url"                     : "https://github.com/eventEmitter/ee-soa-service/issues"
+        , "email"                   : "michael@joinbox.com"
+    }
+    , "keywords"                    : ["ee", "soa", "service"]
     , "engines": {
         "node"                      : ">= 0.10.26"
-    }
-    , "bugs": {
-        "url"                       : "https://github.com/eventEmitter/ee-soa-service/issues"
-        , "email"                   : "tobias@joinbox.com"
     }
     , "dependencies": {
           "ee-class"                : "1.0.x"
@@ -32,10 +32,13 @@
         , "ee-async"                : "0.2.x"
     }
     , "devDependencies": {
-          "mocha"                   : "1.19.*"
+          "mocha"                   : "1.19.x"
+        , "ee-orm"                  : "0.6.x"
+        , "ee-soa-request"          : "0.2.x"
+        , "ee-soa-response"         : "0.1.x"
     }
     , "optionalDependencies": {}
     , "scripts": {
-        "test"                      : "./node_modules/mocha/bin/mocha --reporter spec"
+        "test"                      : "./node_modules/mocha/bin/mocha --reporter spec --bail"
     }
 }
