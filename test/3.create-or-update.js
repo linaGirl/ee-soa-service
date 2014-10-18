@@ -24,7 +24,7 @@
 
     
     // prepare the test environment
-    describe('[Preparations, Create]', function() {
+    describe('(Preparations)', function() {
         it('Setting up the database ...', function(done) {
             this.timeout(5000);
             setupDB(function(err, ormInstance) {
@@ -53,7 +53,7 @@
 
 
 
-    describe('[Create Requests]', function() {
+    describe('[Create Or Update Requests]', function() {
         it('A create request without data should fail (missing fk)', function(done) {
             var request = new SOARequest.CreateRequest();
             request.setCollection('event');

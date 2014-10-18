@@ -10,7 +10,8 @@
         , SOAResponse       = require('ee-soa-response')
         , setupDB           = require('./lib/dbSetup')
         , expect            = require('./lib/expect')
-        , createResponse    = require('./lib/createResponse');
+        , createResponse    = require('./lib/createResponse')
+        , filter            = require('./lib/filterBuilder');
 
 
     // required globals for the tests
@@ -20,6 +21,16 @@
     // the test service
     var   Service       = require('./service')
         , DataService   = require('./dataService');
+
+
+    var testFilter = filter.and(
+          filter.item(['event', 'id'], '<', 10)
+        , filter.item(['event', 'venue', 'municipality', 'id'], '=', 1)
+        , filter.or(
+              filter.item(['event', 'venue', 'municipality', 'id'], '!=', 2)
+            , filter.item(['event', 'id'], '=', null)
+        )
+    );
 
 
 
@@ -53,7 +64,7 @@
 
 
 
-    describe('[Generic]', function() {
+    describe('[List]', function() {
         it('An empty request should return a TARGET_NOT_FOUND status', function(done) {
             var request = new SOARequest.CreateRequest();
 

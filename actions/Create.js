@@ -13,7 +13,7 @@
     module.exports = new Class({
         inherits: Action
        
-
+        
         /*
          * biuld the query required for the action
          */
