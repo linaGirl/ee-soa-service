@@ -2,7 +2,7 @@
     "name"                          : "ee-soa-service"
     , "description"                 : "abstract ee service implementation"
     , "keywords"                    : ["ee", "soa", "service"]
-    , "version"                     : "0.2.61"
+    , "version"                     : "0.2.62"
     , "author": {
         "name"                      : "Tobias Kneubuehler"
         , "email"                   : "tobias@joinbox.com"
