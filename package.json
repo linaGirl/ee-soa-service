@@ -1,40 +1,38 @@
 {
-    "name"                          : "ee-soa-service"
-    , "description"                 : "abstract ee service implementation"
-    , "keywords"                    : ["ee", "soa", "service"]
-    , "version"                     : "0.3.8"
-    , "author": {
-        "name"                      : "Tobias Kneubuehler"
-        , "email"                   : "tobias@joinbox.com"
-    }
-    , "licence"                     : "mit"
+      "name"                            : "ee-soa-service"
+    , "description"                     : "Distributed Service Prototype"
+    , "version"                         : "2.0.0"
+    , "homepage"                        : "https://github.com/eventEmitter/ee-soa-service"
+    , "author"                          : "Michael van der Weg <michael@joinbox.com> (http://eventemitter.com/)"
+    , "license"                         : "MIT"
     , "repository": {
-        "url"                       : "https://github.com/eventEmitter/ee-soa-service.git"
-        , "type"                    : "git"
+          "url"                         : "https://github.com/eventEmitter/ee-soa-service.git"
+        , "type"                        : "git"
     }
     , "engines": {
-        "node"                      : ">= 0.10.26"
+        "node"                          : ">=4.2.1"
     }
     , "bugs": {
-        "url"                       : "https://github.com/eventEmitter/ee-soa-service/issues"
-        , "email"                   : "tobias@joinbox.com"
+        "url"                           : "https://github.com/eventEmitter/ee-soa-service/issues"
     }
     , "dependencies": {
-          "ee-class"                : "1.x"
-        , "ee-types"                : "1.x"
-        , "ee-log"                  : "0.3.x"
-        , "ee-project"              : "0.2.x"
-        , "ee-event-emitter"        : "0.3.x"
-        , "ee-soa-request"          : "0.2.x"
-        , "ee-soa-rpc-request"      : "^0.2.16"
-        , "ee-soa-response"         : "0.1.*"
-        , "ee-argv"                 : "0.1.x"
+          "ee-types"                    : "2.x"
+        , "ee-event-emitter"            : "0.3.x"
+        , "ee-log"                      : "0.3.x"
+        , "ee-argv"                     : "0.1.x"
     }
     , "devDependencies": {
-          "mocha"                   : "1.19.*"
+          "mocha"                       : "2.x"
+        , "coveralls"                   : "2.x"
+        , "istanbul"                    : "0.4.x"
+        , "mocha-lcov-reporter"         : "1.x"
     }
     , "optionalDependencies": {}
+    , "keywords"                        : ["Distributed", "Service", "Prototype"]
     , "scripts": {
-        "test"                      : "./node_modules/mocha/bin/mocha --reporter spec"
+          "test"                        : "node --harmony_rest_parameters --harmony_proxies ./node_modules/mocha/bin/_mocha --reporter spec --bail"
+        , "posttest"                    : "node --harmony_rest_parameters --harmony_proxies ./node_modules/istanbul/lib/cli.js cover node_modules/mocha/bin/_mocha"
+        , "cover"                       : "node --harmony_rest_parameters --harmony_proxies ./node_modules/istanbul/lib/cli.js cover node_modules/mocha/bin/_mocha"
+        , "coveralls"                   : "npm run cover -- --report lcovonly && cat ./coverage/lcov.info | coveralls"
     }
 }

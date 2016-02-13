@@ -1,89 +1,10 @@
-EE-SOA-SERVICE
-====================
+# ee-soa-service
 
-## include in package.json
-- "ee-soa-service" : "version"
-- "ee-class"       : "0.4.*"
-
-## service structure
-you may use the default service structure for your service-package:
-
-+-- Controller (dir for your custom controllers)  
-|   +-- TestController.js  
-+-- lib  
-|   +-- Service.js (your service file, see below)  
-+-- test (your tests)  
-+-- config.js.dist (your config.dist file, for testing etc.)  
-+-- index.js  
-+-- LICENCE  
-+-- package.json  
-+-- README.md  
-+-- service.js (config file)  
-+-- test.js (if you need a test file)  
-
----
-### /lib/Service.js
-
-    !function() {
-        'use strict';
-
-        var Class     = require('ee-class')
-            , Service = require('ee-soa-service');
-
-        module.exports = new Class({
-            inherits: Service
-
-            , name: 'serviceName'
-            , init: function init(options) {
-                this.options    = options || {};
-                this.serviceDir = __dirname + '/../';
-
-                init.parent(options);
-            }
-
-        });
-
-    }();
----
-
----
-### /Controller/TestController.js (with a DefaultORMController)
+Distributed Service Prototype
 
 
-    !function() {
-        'use strict';
-
-        var Class                  = require('ee-class')
-            , DefaultORMController = require('ee-soa-service').DefaultORMController;
-
-        module.exports = new Class({
-            inherits: DefaultORMController
-
-            , init: function init(options) {
-                this.options       = options || {};
-                this.options.table = 'event';
-
-                init.parent(options);
-            }
-
-        });
-
-    }();
-
-
----
-
----
-### /Service.js
-
-
-
-    module.exports = {
-        //controller: ['TestController'] //[optional] if empty we try to load all user created controllers
-        tables: ['user'] //define tables from wich defaultcontrollers will be generated
-        //, controllerDir: 'Controller' //[optional] default to 'Controller'
-    };
-
-
-
----
+[![npm](https://img.shields.io/npm/dm/ee-soa-service.svg?style=flat-square)](https://www.npmjs.com/package/ee-soa-service)
+[![Travis](https://img.shields.io/travis/eventEmitter/ee-soa-service.svg?style=flat-square)](https://travis-ci.org/eventEmitter/ee-soa-service)
+[![node](https://img.shields.io/node/v/ee-soa-service.svg?style=flat-square)](https://nodejs.org/)
+[![bitHound Overall Score](https://www.bithound.io/github/eventEmitter/ee-soa-service/badges/score.svg)](https://www.bithound.io/github/eventEmitter/ee-soa-service)
+[![Coverage Status](https://coveralls.io/repos/eventEmitter/ee-soa-service/badge.svg?branch=master&service=github)](https://coveralls.io/github/eventEmitter/ee-soa-service?branch=master)
