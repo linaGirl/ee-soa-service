@@ -29,7 +29,7 @@
 			service.registerController('event');
 		});
 
-		it('registerController() with an non existing autocontroller', function() {
+		it('registerController() with an non existent autocontroller', function() {
 			let service = new TestService();
 			service.registerController('nope');
 		});
@@ -49,6 +49,14 @@
 		it('loadContollerDirectory() with an fs based controller', function(done) {
 			let service = new TestService();
 			service.loadContollerDirectory(path.join(__dirname, 'lib/controller')).then(() => done()).catch(done);
+		});
+
+
+
+		it('registerController() with an a constructor', function(done) {
+			let service = new TestService();
+			service.registerController('coffee', CoffeController);
+			service.loadController('coffee').then(() => done()).catch(done);
 		});
 	});
 })();
