@@ -2,6 +2,7 @@
 	'use strict';
 
 	let fs 					= require('fs');
+	let path 				= require('path');
 	let EventEmitter 		= require('ee-event-emitter');
 	let type 				= require('ee-types');
 	let LegacyRequestBridge = require('./LegacyRequestBridge');
@@ -28,6 +29,7 @@
 		 * @param {object} controllerOptions
 		 */
 		constructor(options, controllerOptions) {
+			super();
 
 			// the set contains all the names
 			// of the controllers that need to
@@ -100,7 +102,9 @@
 
 
 		/**
-		 * load or return an already loaded controller 
+		 * load or return an already loaded controller
+		 *
+		 * @private
 		 *
 		 * @param {string} controllerName
 		 *
@@ -176,6 +180,8 @@
 		/**
 		 * return a queued promise
 		 *
+		 * @private
+		 *
 		 * @param {string} controllerName
 		 *
 		 * @returns {promise}
@@ -197,6 +203,8 @@
 
 		/**
 		 * instantiate controller and register it
+		 *
+		 * @private
 		 *
 		 * @param {string} controllerName
 		 * @param {function} ControllerConstructor
@@ -233,7 +241,7 @@
 
 					// store
 					this.controllers.set(controllerName, instance);
-				}).catch((err) {
+				}).catch((err) => {
 
 
 					// call all callbacks
@@ -267,17 +275,60 @@
 		 * to the service
 		 *
 		 * @param {string} controllerName
-		 * @param {string|function|undefined|null}
+		 * @param {function|undefined|null} Constructor
 		 *
 		 * @returns {this}
 		 */
-		registerController(controllerName, path) {
-			this.registeredControllers.set(controllerName, path);
+		registerController(controllerName, Constructor) {
+			this.registeredControllers.set(controllerName, Constructor);
 		}
 
 
 
 		
+
+
+
+
+
+
+
+
+		/**
+		 * load controllers from a dir
+		 *
+		 * @param {string} directoryPath
+		 */
+		loadContollerDirectory(directoryPath) {
+			return new Promise((resolve, reject) => {
+				fs.readdir(directoryPath, (err, files) => {
+					if (err) reject(err);
+					else {
+
+
+						// only load the js files
+						files.filter((file) => path.extname(file, '.js')).forEach((file) => {
+							
+
+							// we need camelcase with loweercase 
+							// first letter
+							let name = path.basename(file, '.js');
+							this.registerController(name[0].toLowerCase()+name.substr(1), path.join(directoryPath, file));
+						});
+
+
+						// we're good
+						resolve();
+					}
+				});
+			});
+		}
+
+
+
+
+
+
 
 
 
