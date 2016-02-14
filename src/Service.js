@@ -163,7 +163,7 @@
 					// possible
 					if (this.db && this.db.has(controllerName)) return this.instantiateController(controllerName, AutoCRUDController);
 					else return Promise.reject(new Error(`Cannot load the controller '${controllerName}' because the corresponding database entitiy is not available!`)); 
-				} else return Promise.reject(new Error(`Cannot load the controller '${controllerName}' because it was registred incorrectly!`));
+				} else return Promise.reject(new Error(`Cannot load the controller '${controllerName}' because it has an invalid type '${type(controlletValue)}', expected a string (path), function (constructor) or null/undefiend for an auto controller!`));
 			}
 		}
 
@@ -231,7 +231,7 @@
 					if (instance instanceof Controller) {
 
 						// nice, let the controller load stuff
-						instance.load().then(() => resolve(instance)).reject(reject);
+						instance.load().then(() => resolve(instance)).catch(reject);
 					} else reject(new Error(`Cannot load the controller '${controllerName}' because it does not inherit from the Controller class!`));
 				}).then((instance) => {
 
