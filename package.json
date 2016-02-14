@@ -26,6 +26,9 @@
         , "coveralls"                   : "2.x"
         , "istanbul"                    : "0.4.x"
         , "mocha-lcov-reporter"         : "1.x"
+        , "ee-soa-request"              : "*"
+        , "ee-soa-response"             : "*"
+        , "ee-soa-rpc-request"          : "*"
     }
     , "optionalDependencies": {}
     , "keywords"                        : ["Distributed", "Service", "Prototype"]
