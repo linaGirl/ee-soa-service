@@ -125,8 +125,7 @@
 				if (type.array(controller)) return this.queueControllerRequest(controllerName);
 				else if (type.error(controller)) return Promise.reject(controller);
 				else return Promise.resolve(controller);
-			}
-			else {
+			} else if (this.registeredControllers.has(controllerName)) {
 				let controlletValue = this.registeredControllers.get(controllerName);
 
 
@@ -161,10 +160,9 @@
 
 					// virtual controller, load using the db if 
 					// possible
-					if (this.db && this.db.has(controllerName)) return this.instantiateController(controllerName, AutoCRUDController);
-					else return Promise.reject(new Error(`Cannot load the controller '${controllerName}' because the corresponding database entitiy is not available!`)); 
+					return this.instantiateController(controllerName, AutoCRUDController);
 				} else return Promise.reject(new Error(`Cannot load the controller '${controllerName}' because it has an invalid type '${type(controlletValue)}', expected a string (path), function (constructor) or null/undefiend for an auto controller!`));
-			}
+			} else return Promise.reject(new Error(`Cannot load the controller '${controllerName}' it was not registered!`));
 		}
 
 
@@ -222,7 +220,7 @@
 
 					// instantiate
 					try {
-						instance = new ControllerConstructor(this, this.controllerOptions);
+						instance = new ControllerConstructor(controllerName, this, this.controllerOptions);
 					} catch (err) {
 						return reject(err);
 					}
