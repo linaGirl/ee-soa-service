@@ -1,13 +1,13 @@
 {
     "name"                          : "ee-soa-service"
-    , "description"                 : "abstract ee service implementation"
+    , "description"                 : "abstract service implementation"
     , "keywords"                    : ["ee", "soa", "service"]
-    , "version"                     : "0.4.3"
+    , "version"                     : "0.4.4"
     , "author": {
         "name"                      : "Tobias Kneubuehler"
         , "email"                   : "tobias@joinbox.com"
     }
-    , "licence"                     : "mit"
+    , "license"                     : "MIT"
     , "repository": {
         "url"                       : "https://github.com/eventEmitter/ee-soa-service.git"
         , "type"                    : "git"
@@ -21,7 +21,7 @@
     }
     , "dependencies": {
           "ee-class"                : "1.x"
-        , "ee-types"                : "1.x"
+        , "ee-types"                : "2.x"
         , "ee-log"                  : "0.3.x"
         , "ee-project"              : "0.2.x"
         , "ee-event-emitter"        : "0.3.x"
