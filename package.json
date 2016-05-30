@@ -2,7 +2,7 @@
     "name"                          : "ee-soa-service"
     , "description"                 : "abstract service implementation"
     , "keywords"                    : ["ee", "soa", "service"]
-    , "version"                     : "1.0.1"
+    , "version"                     : "1.0.2"
     , "author": {
         "name"                      : "Tobias Kneubuehler"
         , "email"                   : "tobias@joinbox.com"
@@ -13,7 +13,7 @@
         , "type"                    : "git"
     }
     , "engines": {
-        "node"                      : ">= 0.10.26"
+        "node"                      : ">=4"
     }
     , "bugs": {
         "url"                       : "https://github.com/eventEmitter/ee-soa-service/issues"
