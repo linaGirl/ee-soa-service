@@ -1,0 +1,17 @@
+language: node_js
+
+node_js :
+    - "v4"
+    - "v5"
+    - "v6"
+
+addons:
+    postgresql: "9.4"
+
+before_script:
+  - psql -f test/createdb.sql -U postgres
+  - psql -f test/postgres.sql -U postgres
+  - mysql -e 'create database ee_orm_test_mysql;'
+
+
+sudo: false

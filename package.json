@@ -1,29 +1,27 @@
 {
-    "name"                          : "ee-soa-service"
-    , "description"                 : "abstract service implementation"
-    , "keywords"                    : ["ee", "soa", "service"]
-    , "version"                     : "1.3.0"
+      "name"                        : "ee-soa-service"
+    , "description"                 : "distributed services"
+    , "version"                     : "2.0.0"
     , "author": {
-        "name"                      : "Tobias Kneubuehler"
-        , "email"                   : "tobias@joinbox.com"
+          "name"                    : "Michael van der Weg"
+        , "email"                   : "michael@joinbox.com"
     }
     , "license"                     : "MIT"
     , "repository": {
-        "url"                       : "https://github.com/eventEmitter/ee-soa-service.git"
+          "url"                     : "https://github.com/eventEmitter/ee-soa-service.git"
         , "type"                    : "git"
     }
     , "engines": {
         "node"                      : ">=4"
     }
     , "bugs": {
-        "url"                       : "https://github.com/eventEmitter/ee-soa-service/issues"
-        , "email"                   : "tobias@joinbox.com"
+          "url"                     : "https://github.com/eventEmitter/ee-soa-service/issues"
+        , "email"                   : "michael@joinbox.com"
     }
     , "dependencies": {
           "ee-class"                : "1.x"
         , "ee-types"                : "2.x"
         , "ee-log"                  : "0.3.x"
-        , "ee-project"              : "0.2.x"
         , "ee-event-emitter"        : "0.3.x"
         , "ee-soa-request"          : "0.2.x"
         , "ee-soa-rpc-request"      : "^0.2.16"
@@ -37,4 +35,5 @@
     , "scripts": {
         "test"                      : "./node_modules/mocha/bin/mocha --reporter spec"
     }
+    , "keywords"                    : ["distributed"]
 }
