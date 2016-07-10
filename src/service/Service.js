@@ -108,7 +108,7 @@
                                 }).catch((err) => {
 
                                     // 500, server error
-                                    response.status = response.status.serverError;
+                                    response.status = response.statusCodes.serverError;
                                     response.statusMessage = `The action '${action}' on the '${resourceName}' resource failed!`;
                                     response.statusError = err;
                                     response.send();
@@ -117,7 +117,7 @@
                             else {
 
                                 // 501, not implemented
-                                response.status = response.status.notImplemented;
+                                response.status = response.statusCodes.notImplemented;
                                 response.statusMessage = `The action '${action}' was not implemented on the '${resourceName}' resource!`;
                                 response.send();
                             }
@@ -125,7 +125,7 @@
                         else {
 
                             // 404, not found
-                            response.status = response.status.notFound;
+                            response.status = response.statusCodes.notFound;
                             response.statusMessage = `The resource '${resourceName}' could not be found!`;
                             response.send();
                         }
@@ -137,7 +137,7 @@
 
                 // it's kind of a 404, but we're going
                 // with a 403 forbidden
-                response.status = response.status.forbidden;
+                response.status = response.statusCodes.forbidden;
                 response.statusMessage = `The action '${action}' cannot be called!`;
                 response.send();
             }
@@ -182,7 +182,7 @@
                             if (rateLimitInfo && rateLimitInfo.left <= 0) {
 
                                 // 429, too many requests
-                                response.status = response.status.tooManyRequests;
+                                response.status = response.statusCodes.tooManyRequests;
                                 response.statusMessage = `Rate limit exceeded! You have ${rateLimitInfo.capacity} credits per ${rateLimitInfo.interval} seconds. Left ${rateLimitInfo.left}!`;
                                 response.send();
                             }
@@ -194,14 +194,14 @@
                     else {
 
                         // 401, unauthorized
-                        response.status = response.status.unauthorized;
+                        response.status = response.statusCodes.unauthorized;
                         response.statusMessage = `Accessing the ${resourceName} resource with the action ${actionName} using the current credentials is not allowed!`;
                         response.send();
                     }
                 }).catch((err) => {
 
                     // 500, server error
-                    response.status = response.status.serverError;
+                    response.status = response.statusCodes.serverError;
                     response.statusMessage = `The permissions management failed to load the permissions!`;
                     response.statusError = err;
                     response.send();

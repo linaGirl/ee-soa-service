@@ -8,7 +8,7 @@
 
 
 
-    module.exports = class {
+    module.exports = class Request {
 
 
 
@@ -58,7 +58,7 @@
          * @param {string} resourceName
          * @param {string} actionName
          */
-        constructor(serviceName, resourceName, actionName) {
+        constructor(serviceName, resourceName, actionName, resourceId) {
 
             // a request my have multiple accessTokens
             this._accessTokens = new Set();
@@ -70,6 +70,7 @@
             this.setService(serviceName);
             this.setResource(resourceName);
             this.setAction(actionName);
+            this.setResourceId(resourceId);
         }
 
 

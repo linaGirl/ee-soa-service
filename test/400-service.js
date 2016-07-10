@@ -17,6 +17,9 @@
         });
 
 
-        
+        it('should accept instantiatedd controllers', () => {
+            const service = new Service('user');
+            
+        });
     });
 })();

@@ -4,12 +4,13 @@
 
 
     const type = require('ee-types');
+    const EventEmitter = require('events');
 
 
 
 
 
-    module.exports = class Service {
+    module.exports = class Service extends EventEmitter {
 
 
 
@@ -33,6 +34,7 @@
          * @param {object} serviceInstance the service this controller is part of
          */
         constructor(controllerName, serviceInstance) {
+            super();
 
 
             // our name
@@ -77,11 +79,18 @@
 
                 // only aaccept promises as returnvalue
                 if (type.promise(returnValue)) return returnValue;
-                else return Promise.reject(new Error(`The action '${request.getAction()}' on the '${this.name}' resource returned an invalid value. Èxpected a promise, got '${type(returnValue)}'!`));
+                else {
+                    response.status = response.statusCodes.serverError;
+                    response.statusMessage = `The action '${request.action}' on the '${this.name}' failed!`;
+                    response.statusError = new Error(`The action '${request.action}' on the '${this.name}' resource returned an invalid value. Èxpected a promise, got '${type(returnValue)}'!`);
+                    response.send();
+
+                    return Promise.resolve();
+                }
             }
             else {
-                response.status = response.status.notImplemented;
-                response.statusMessage = `The action '${request.getAction()}' on the '${this.name}' resource was not implemented!`;
+                response.status = response.statusCodes.notImplemented;
+                response.statusMessage = `The action '${request.action}' on the '${this.name}' resource was not implemented!`;
                 response.send();
 
                 return Promise.resolve();

@@ -35,8 +35,8 @@
          * @param {string} resourceName
          * @param {string} actionName
          */
-        constructor(serviceName, resourceName, actionName) {
-            super(serviceName, resourceName, actionName);
+        constructor(serviceName, resourceName, actionName, resourceId) {
+            super(serviceName, resourceName, actionName, resourceId);
         }
 
 

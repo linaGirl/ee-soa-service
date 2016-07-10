@@ -24,4 +24,7 @@
     distributed.Request                 = require('./src/transport/Request');
     distributed.RelationalRequest       = require('./src/transport/RelationalRequest');
 
+
+    distributed.Response                 = require('./src/transport/Response');
+
 })();
