@@ -11,9 +11,17 @@
 
 
     // distributed prototype
-    const distributedd = module.exports.distributed = {};
-    
-    distributed.Service = require('./src/Service');
-    distributed.RelatedService = require('./src/RelatedService');
+    const distributed = module.exports.distributed = {};
+
+
+    distributed.Service                 = require('./src/service/Service');
+    distributed.RelatedService          = require('./src/service/RelatedService');
+
+
+    distributed.Controller              = require('./src/controller/Controller');
+
+
+    distributed.Request                 = require('./src/transport/Request');
+    distributed.RelationalRequest       = require('./src/transport/RelationalRequest');
 
 })();

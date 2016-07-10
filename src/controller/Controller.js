@@ -18,7 +18,7 @@
         get name() { return this._name; }
 
 
-        // the service this controlelr is part of
+        // the service this controller is part of
         get service() { return this._service; }
 
 
@@ -29,14 +29,14 @@
         /**
          * set up the controller
          *
-         * @param {string} controllerName the name of the controlelr
-         * @param {object} serviceInstance the service this controlelr is part of
+         * @param {string} controllerName the name of the controller
+         * @param {object} serviceInstance the service this controller is part of
          */
         constructor(controllerName, serviceInstance) {
 
 
             // our name
-            if (!type.string() || !controllerName.length) throw new Error(`Please provide a controllerName!`);
+            if (!type.string(controllerName) || !controllerName.length) throw new Error(`Please provide a controllerName!`);
             this._name = controllerName;
 
 

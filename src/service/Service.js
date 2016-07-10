@@ -3,7 +3,11 @@
 
 
     const EventEmitter = require('events');
+    const path = require('path');
+    const fs = require('fs');
+
     const type = require('ee-types');
+    const Controller = require('../controller/Controller');
 
 
 
@@ -29,6 +33,8 @@
          * @param {string} serviceName the name of the service
          */
         constructor(serviceName) {
+            super();
+
 
             // we need a serviceName
             if (!type.string(serviceName) || serviceName.length < 1) throw new Error(`You have to specify a service name!`);
@@ -43,36 +49,6 @@
             // by a request
             this.validActions = new Set(['list', 'listOne', 'create', 'update', 'delete', 'updateOrCreate', 'createRelation', 'updateRelation', 'deleteRelation']);
         }
-
-
-
-
-        /**
-         * loads a controller from the filesystem
-         *
-         * @param {string} path an absolute or relative
-         *                      path for loading and
-         *                      reghistering a controller
-         *
-         */
-        loadControllerClass(path, options) {
-
-        }
-
-
-
-
-
-        /**
-         * creates a pretty useless empty controller
-         * this method should be replaced with custom
-         * controller generators by casses extending
-         * from this class
-         */
-        loadController(...names) {
-
-        }
-
 
 
 
@@ -243,6 +219,152 @@
 
 
 
+
+        /**
+         * loads all js files from a directory
+         * and registers them as controllers
+         *
+         * @param {string} controllersDirectory absolute path
+         * @param {regexp} inclusionPattern a pattern to test the
+         *                 controller names against
+         * @param {regexp} nameReplacePattern pattern that can be used
+         *                 to remove some parts from the controllers
+         *
+         * @returns {promise}
+         */
+        loadControllersFromDirectory(controllersDirectory, inclusionPattern, nameReplacePattern) {
+            return new Promise((resolve, reject) => {
+
+                // get path info
+                fs.stat(controllersDirectory, (err, stats) => {
+                    if (err) {
+                        err.message = `Failed to stat the controller directory '${controllersDirectory}' for the service '${this.name}': ${err.message}`
+                        reject(err);
+                    }
+                    else {
+
+                        // must be a directory
+                        if (stats.isDirectory()) {
+                            fs.readdir(controllersDirectory, (err, files) => {
+                                if (err) {
+                                    err.message = `Failed to list the controller directory '${controllersDirectory}' for the service '${this.name}': ${err.message}`
+                                    reject(err);
+                                }
+                                else {
+
+                                    // laod all controllers from the directory
+                                    for (const fileName of files) {
+
+                                        // has to be js, and tested against th einclusion pattern
+                                        if (path.extname(fileName) === '.js' && (inclusionPattern ? inclusionPattern.test(fileName) : true)) {
+                                            const controllerName = path.basename(fileName, '.js').replace((nameReplacePattern || ''), '');
+                                            let ControllerConstructor;
+
+                                            // go, load the controller
+                                            try {
+                                                ControllerConstructor = require(path.join(controllersDirectory, fileName));
+                                            } catch (err) {
+                                                err.message = `Failed to laod the controller '${path.join(controllersDirectory, fileName)}' for the service '${this.name}': ${err.message}`
+                                                return reject(err);
+                                            }
+
+
+                                            // register
+                                            this.registerController(controllerName, ControllerConstructor);
+                                        }
+                                    }
+
+
+                                    // nice job, done ;)
+                                    resolve();
+                                }
+                            });
+                        }
+                        else reject(new Error(`Failed to load controllers from directory ${controllersDirectory}: path is not a directory!`));
+                    }
+                });
+            });
+        }
+
+
+
+
+
+
+
+
+
+
+        /**
+         * register a controlelr constructor function
+         *
+         * @param {string} controllerName the name of the controller
+         * @param {object} controllerClass the class constructor function
+         */
+        registerController(controllerName, controllerClass) {
+
+            // check name avilability
+            this.checkControllerRegistration(controllerInstance.name);
+
+            // check input
+            if (type.function(controllerClass)) this.controllers.set(controllerName, controllerClass);
+            else throw new Error(`Cannot register the '${controllerName}' class, it has to be a constructor function! Got a '${type(controllerClass)}'`);
+        }
+
+
+
+
+
+
+
+
+
+
+        /**
+         * register a instantiated controller
+         *
+         * @param {object} controllerInstance instance of a controller
+         */
+        registerControllerInstance(controllerInstance) {
+            if (type.object(controllerInstance) && controllerInstance instanceof Controller) {
+
+                // check name avilability
+                this.checkControllerRegistration(controllerInstance.name);
+
+                // register
+                this.controllers.set(controllerInstance.name, controllerInstance);
+            }
+            else throw new Error(`Expected an instantiated class extending the Controller class!`);
+        }
+
+
+
+
+
+
+
+
+
+
+        /**
+         * checks if the slot for the contrller name is
+         * free and available
+         *
+         * @param {string} controllerName
+         */
+        checkControllerRegistration(controllerName) {
+            if (!type.string(controllerName) || !controllerName.length) throw new Error(`Please provide a valid controller name!`);
+            if (this.controllers.has(controllerName)) throw new Error(`Cannot register the controller '${controllerName}', it was already registered before!`);
+        }
+
+
+
+
+
+
+
+
+
         /**
          * loads all the registred controllers
          * sets the loaded flags, emits the load
@@ -252,17 +374,58 @@
          */
         load() {
             return Promise.all(Array.from(this.controllers.keys()).map((controllerName) => {
+                const controllerValue = this.controllers.get(controllerName);
 
-                // instantiate the controller, pass them
-                // the service so that they can get the
-                // required options from it
-                const instance = new (this.controllers.get(controllerName))(controllerName, this);
 
-                // store
-                this.controllers.set(controllerName, instance);
+                // there may controlelrs that were instantiated already
+                if (type.object(controllerValue) && controllerValue instanceof Controller) {
 
-                // load the controller
-                return instance.load();
+
+                    if (controllerValue.isLoading()) {
+
+                        // loading is in progress
+                        return new Promise((resolve, reject) => {
+                            controllerValue.on((err) => {
+                                if (err) reject(err);
+                                else resolve();
+                            });
+                        });
+                    }
+                    else if (controllerValue.isLoaded()) {
+
+                        // loading has finishedd
+                        if (controllerValue.hasLoadingError()) return Promise.resject(controllerValue.getLoadingError());
+                        else return Promise.resolve();
+                    }
+                    else {
+
+                        // load now
+                        return controllerValue.load();
+                    }
+                }
+                else {
+
+                    // instantiate the controller, pass them
+                    // the service so that they can get the
+                    // required options from it
+                    try {
+                        const instance = new controllerValue(controllerName, this);
+                    } catch (err) {
+                        err.message = `Failed to instantiate the '${controllerName}' controller: ${err.message}`;
+                        return Promise.reject(err);
+                    }
+
+
+                    if (!(instance instanceof Controller)) return Promise.reject(new Error(`The controller '${controllerName}' does not extend the Controller class!`));
+                    else {
+
+                        // store
+                        this.controllers.set(controllerName, instance);
+
+                        // load the controller
+                        return instance.load();
+                    }
+                }
             })).then(() => {
 
                 // ready for work :)
