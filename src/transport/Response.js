@@ -18,6 +18,8 @@
     statusCodes.add('tooManyRequests');
     statusCodes.add('unauthorized');
     statusCodes.add('ok');
+    statusCodes.add('serviceUnavailable');
+
 
     // proxy calls to the status object,
     // so only valid statuscodes can be used
@@ -126,16 +128,38 @@
 
 
 
+        /**
+         * indicates if a status was set
+         *
+         * @returns {boolean}
+         */
+        hasStatus() {
+            return this.status !== null;
+        }
+
+
 
 
         /**
          * sends the request
          */
         send() {
-            if (!this.status) throw new Error(`Cannot send reposne. The responses status was not set!`);
+            if (this.isSent()) throw new Error(`Cannot send response. The response was already sent!`);
 
-            this.emit('send');
             this._internalStatus = 'sent';
+
+            if (!this.status) throw new Error(`Cannot send response. The response status was not set!`);
+
+            // make sure that the call is not
+            // inside any try catch statements
+            // provided by the service
+            process.nextTick(() => {
+
+                this.emit('send');
+
+                // clean up
+                this.removeAllListeners();
+            });
         }
     };
 })();

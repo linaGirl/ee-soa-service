@@ -65,26 +65,26 @@
          * @param {obejct} respone
          */
         request(request, response) {
-            const action = request.getAction();
+
+            // check if the service is ready
+            if (this.loaded) {
+                const action = request.action;
+
+                // do only execute predefined actions
+                if (this.validActions.has(action)) {
+
+                    // make suer the user is allowed to work on the resource
+                    this.checkPermissions(request, response).then(() => {
+
+                        // the response may be already sent by the permissions
+                        // management, do only continue if not
+                        if (!response.isSent()) {
+                            const resourceName = request.resource;
+
+                            if (this.controllers.has(resourceName)) {
+                                const controller = this.controllers.get(resourceName);
 
 
-            // do only execute predefined actions
-            if (this.validActions.has(action)) {
-
-                // make suer the user is allowed to work on the resource
-                this.checkPermissions(request, response).then(() => {
-
-                    // the response may be already sent by the permissions
-                    // management, do only continue if not
-                    if (!response.isSent()) {
-                        const resourceName = request.getResource();
-
-
-                        if (this.controllers.has(resourceName)) {
-                            const controller = this.controllers.get();
-
-
-                            if (controller.hasAction(action)) {
 
                                 // all actions have lifecycle methods that
                                 // are called if they are implented. all
@@ -103,42 +103,49 @@
                                     if (response.isSent()) return Promise.resolve();
                                     else if (response.hasStatus()) {
                                         response.send();
-                                        return Promnise.resolve();
-                                    } else return Promnise.reject(new Error(`The action '${action}' on the '${resourceName}' resource failed to set a status!`));
+                                        return Promise.resolve();
+                                    } else return Promise.reject(new Error(`The action '${action}' on the '{this.name}.${resourceName}' resource failed to set a status!`));
                                 }).catch((err) => {
 
                                     // 500, server error
                                     response.status = response.statusCodes.serverError;
-                                    response.statusMessage = `The action '${action}' on the '${resourceName}' resource failed!`;
+                                    response.statusMessage = `The action '${action}' on the '{this.name}.${resourceName}' resource failed!`;
                                     response.statusError = err;
                                     response.send();
                                 });
                             }
                             else {
 
-                                // 501, not implemented
-                                response.status = response.statusCodes.notImplemented;
-                                response.statusMessage = `The action '${action}' was not implemented on the '${resourceName}' resource!`;
+                                // 404, not found
+                                response.status = response.statusCodes.notFound;
+                                response.statusMessage = `The resource '{this.name}.${resourceName}' could not be found!`;
                                 response.send();
                             }
-                        }
-                        else {
+                        } else return Promise.resolve();
+                    }).catch((err) => {
 
-                            // 404, not found
-                            response.status = response.statusCodes.notFound;
-                            response.statusMessage = `The resource '${resourceName}' could not be found!`;
-                            response.send();
-                        }
-                    }
-                });
+                        // 500, server error
+                        response.status = response.statusCodes.serverError;
+                        response.statusMessage = `The action '${action}' on the '{this.name}.${request.resource}' resource failed!`;
+                        response.statusError = err;
+                        response.send();
+                    });
+                }
+                else {
+
+
+                    // it's kind of a 404, but we're going
+                    // with a 403 forbidden
+                    response.status = response.statusCodes.forbidden;
+                    response.statusMessage = `The action '${action}' cannot be called!`;
+                    response.send();
+                }
             }
             else {
 
-
-                // it's kind of a 404, but we're going
-                // with a 403 forbidden
-                response.status = response.statusCodes.forbidden;
-                response.statusMessage = `The action '${action}' cannot be called!`;
+                // 404, not found
+                response.status = response.statusCodes.serviceUnavailable;
+                response.statusMessage = `The resource '${this.name}.${request.resource}' is currently not available!`;
                 response.send();
             }
         }
@@ -197,6 +204,8 @@
                         response.status = response.statusCodes.unauthorized;
                         response.statusMessage = `Accessing the ${resourceName} resource with the action ${actionName} using the current credentials is not allowed!`;
                         response.send();
+
+                        return Promise.resolve();
                     }
                 }).catch((err) => {
 
@@ -304,7 +313,7 @@
         registerController(controllerName, controllerClass) {
 
             // check name avilability
-            this.checkControllerRegistration(controllerInstance.name);
+            this.checkControllerRegistration(controllerClass.name);
 
             // check input
             if (type.function(controllerClass)) this.controllers.set(controllerName, controllerClass);
@@ -404,12 +413,13 @@
                     }
                 }
                 else {
+                    let instance;
 
                     // instantiate the controller, pass them
                     // the service so that they can get the
                     // required options from it
                     try {
-                        const instance = new controllerValue(controllerName, this);
+                        instance = new controllerValue(controllerName, this);
                     } catch (err) {
                         err.message = `Failed to instantiate the '${controllerName}' controller: ${err.message}`;
                         return Promise.reject(err);
@@ -432,6 +442,7 @@
                 this._loaded = true;
                 this.emit('load');
             }).catch((err) => {
+                this._loadingError = err;
                 this.emit('load', new Error(`The service '${this.serviceName}' failed to load: ${err.message}`));
             });
         }
@@ -450,7 +461,8 @@
          * @reutrns {promise}
          */
         ready() {
-            if (this.loaded) return Promise.resolve();
+            if (this._loadingError) return Promise.reject(this._loadingError);
+            else if (this.loaded) return Promise.resolve();
             else {
                 return new Promise((resolve, reject) => {
                     this.once('load', (err) => {

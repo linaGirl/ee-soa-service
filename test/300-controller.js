@@ -58,7 +58,7 @@
 
 
 
-        it('hould be able to call lifecycle methods', (done) => {
+        it('should be able to call lifecycle methods', (done) => {
             const userController = new UserController('user', service);
             const request = new Request('user', 'user', 'create');
             const response = new Response();

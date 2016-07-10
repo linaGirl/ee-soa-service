@@ -55,6 +55,22 @@
 
 
 
+        /**
+         * can be used to prepare the controller
+         *
+         * @returns {promise}
+         */
+        load() {
+            return Promise.resolve();
+        }
+
+
+
+
+
+
+
+
 
 
 
@@ -76,7 +92,6 @@
                 // service will handle the problems
                 returnValue = this[methodName](request, response);
 
-
                 // only aaccept promises as returnvalue
                 if (type.promise(returnValue)) return returnValue;
                 else {
@@ -96,6 +111,8 @@
                 return Promise.resolve();
             }
         }
+
+
 
 
 
