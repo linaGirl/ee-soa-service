@@ -2,7 +2,7 @@
     "name"                          : "ee-soa-service"
     , "description"                 : "abstract service implementation"
     , "keywords"                    : ["ee", "soa", "service"]
-    , "version"                     : "2.0.0"
+    , "version"                     : "2.0.1"
     , "author": {
         "name"                      : "Tobias Kneubuehler"
         , "email"                   : "tobias@joinbox.com"
@@ -29,10 +29,10 @@
         , "ee-soa-rpc-request"      : "^0.2.16"
         , "ee-soa-response"         : "0.1.*"
         , "ee-argv"                 : "0.1.x"
-        , "distributed-prototype"   : "1.x"
+        , "distributed-prototype"   : "2.x"
     }
     , "devDependencies": {
-          "mocha"                   : "2.x"
+          "mocha"                   : "3.x"
     }
     , "optionalDependencies": {}
     , "scripts": {
