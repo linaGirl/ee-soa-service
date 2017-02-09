@@ -2,7 +2,7 @@
     "name"                          : "ee-soa-service"
     , "description"                 : "abstract service implementation"
     , "keywords"                    : ["ee", "soa", "service"]
-    , "version"                     : "2.6.0"
+    , "version"                     : "2.6.1"
     , "author": {
         "name"                      : "Tobias Kneubuehler"
         , "email"                   : "tobias@joinbox.com"
@@ -20,16 +20,19 @@
         , "email"                   : "tobias@joinbox.com"
     }
     , "dependencies": {
-          "ee-class"                : "1.x"
-        , "ee-types"                : "2.x"
-        , "ee-log"                  : "0.3.x"
-        , "ee-project"              : "0.2.x"
-        , "ee-event-emitter"        : "0.3.x"
-        , "ee-soa-request"          : "0.2.x"
-        , "ee-soa-rpc-request"      : "^0.2.16"
-        , "ee-soa-response"         : "0.1.*"
-        , "ee-argv"                 : "0.1.x"
-        , "distributed-prototype"   : "2.x"
+          "ee-class"                 : "1.x"
+        , "ee-types"                 : "2.x"
+        , "ee-log"                   : "0.3.x"
+        , "ee-project"               : "0.2.x"
+        , "ee-event-emitter"         : "0.3.x"
+        , "ee-soa-request"           : "0.2.x"
+        , "ee-soa-rpc-request"       : "^0.2.16"
+        , "ee-soa-response"          : "0.1.*"
+        , "ee-argv"                  : "0.1.x"
+        , "distributed-prototype"    : "2.x"
+        , "permissions-service"      : "2.x"
+        , "row-restrictions-service" : "1.x"
+        , "rate-limit-service"       : "1.x"
     }
     , "devDependencies": {
           "mocha"                   : "3.x"
