@@ -1,6 +1,8 @@
 EE-SOA-SERVICE
 ====================
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/eventEmitter/ee-soa-service.svg)](https://greenkeeper.io/)
+
 ## include in package.json
 - "ee-soa-service" : "version"
 - "ee-class"       : "0.4.*"
