@@ -2,7 +2,7 @@
     "name"                              : "ee-soa-service"
     , "description"                     : "abstract service implementation"
     , "keywords"                        : ["ee", "soa", "service"]
-    , "version"                         : "2.8.0"
+    , "version"                         : "2.8.1"
     , "author": {
         "name"                          : "Tobias Kneubuehler"
         , "email"                       : "tobias@joinbox.com"
@@ -22,7 +22,7 @@
     , "dependencies": {
           "ee-class"                    : "1.x"
         , "ee-types"                    : "2.x"
-        , "ee-log"                      : "0.3.x"
+        , "ee-log"                      : "2.x"
         , "ee-project"                  : "0.2.x"
         , "ee-event-emitter"            : "0.3.x"
         , "ee-soa-request"              : "0.2.x"
